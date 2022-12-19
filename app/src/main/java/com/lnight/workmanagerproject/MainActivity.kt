@@ -22,6 +22,7 @@ import androidx.lifecycle.LifecycleOwner
 import androidx.work.*
 import coil.compose.rememberAsyncImagePainter
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
+import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberPermissionState
 import com.lnight.workmanagerproject.ui.theme.WorkmanagerProjectTheme
 
@@ -132,7 +133,7 @@ private fun RequestNotificationsPermission(
         val permissionState = rememberPermissionState(
             android.Manifest.permission.POST_NOTIFICATIONS
         )
-        if (!permissionState.hasPermission) {
+        if (!permissionState.status.isGranted) {
             DisposableEffect(lifecycleOwner) {
                 val observer = LifecycleEventObserver { _, event ->
                     if (event == Lifecycle.Event.ON_START) {
